@@ -1,0 +1,124 @@
+mysql> -- Create a new database
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE DATABASE mydatabase;
+ERROR 1007 (HY000): Can't create database 'mydatabase'; database exists
+mysql>
+mysql> -- Select the database
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> USE mydatabase;
+Database changed
+mysql> -- Create table Bank
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE TABLE Bank (
+    ->     S_No INT PRIMARY KEY,
+    ->     Cust_Name VARCHAR(100),
+    ->     Acc_No VARCHAR(100),
+    ->     Balance DECIMAL(10, 2),
+    ->     Cus_Branch VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> -- Insert rows into Bank table
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO Bank (S_No, Cust_Name, Acc_No, Balance, Cus_Branch) VALUES
+    -> (1, 'Alice', 'ACC12345', 5000.00, 'New York'),
+    -> (2, 'Bob', 'ACC23456', 3000.00, 'Los Angeles'),
+    -> (3, 'Charlie', 'ACC34567', 7000.00, 'Chicago'),
+    -> (4, 'David', 'ACC45678', 2000.00, 'Houston'),
+    -> (5, 'Eve', 'ACC56789', 6000.00, 'Phoenix');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Select all fields from Bank table
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Bank;
++------+-----------+----------+---------+-------------+
+| S_No | Cust_Name | Acc_No   | Balance | Cus_Branch  |
++------+-----------+----------+---------+-------------+
+|    1 | Alice     | ACC12345 | 5000.00 | New York    |
+|    2 | Bob       | ACC23456 | 3000.00 | Los Angeles |
+|    3 | Charlie   | ACC34567 | 7000.00 | Chicago     |
+|    4 | David     | ACC45678 | 2000.00 | Houston     |
+|    5 | Eve       | ACC56789 | 6000.00 | Phoenix     |
++------+-----------+----------+---------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Update Cus_Branch in the second row
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE Bank
+    -> SET Cus_Branch = 'Pondicherry'
+    -> WHERE S_No = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> -- Select with WHERE clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Bank
+    -> WHERE Balance > 4000;
++------+-----------+----------+---------+------------+
+| S_No | Cust_Name | Acc_No   | Balance | Cus_Branch |
++------+-----------+----------+---------+------------+
+|    1 | Alice     | ACC12345 | 5000.00 | New York   |
+|    3 | Charlie   | ACC34567 | 7000.00 | Chicago    |
+|    5 | Eve       | ACC56789 | 6000.00 | Phoenix    |
++------+-----------+----------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Select with ORDER BY clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Bank
+    -> ORDER BY Cust_Name ASC;
++------+-----------+----------+---------+-------------+
+| S_No | Cust_Name | Acc_No   | Balance | Cus_Branch  |
++------+-----------+----------+---------+-------------+
+|    1 | Alice     | ACC12345 | 5000.00 | New York    |
+|    2 | Bob       | ACC23456 | 3000.00 | Pondicherry |
+|    3 | Charlie   | ACC34567 | 7000.00 | Chicago     |
+|    4 | David     | ACC45678 | 2000.00 | Houston     |
+|    5 | Eve       | ACC56789 | 6000.00 | Phoenix     |
++------+-----------+----------+---------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Select with GROUP BY clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT Cus_Branch, COUNT(*) AS Num_Customers
+    -> FROM Bank
+    -> GROUP BY Cus_Branch;
++-------------+---------------+
+| Cus_Branch  | Num_Customers |
++-------------+---------------+
+| New York    |             1 |
+| Pondicherry |             1 |
+| Chicago     |             1 |
+| Houston     |             1 |
+| Phoenix     |             1 |
++-------------+---------------+
+5 rows in set (0.01 sec)
+
+mysql>
+mysql> -- Select with HAVING clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT Cus_Branch, COUNT(*) AS Num_Customers
+    -> FROM Bank
+    -> GROUP BY Cus_Branch
+    -> HAVING COUNT(*) > 1;
+Empty set (0.00 sec)
+
+
+
