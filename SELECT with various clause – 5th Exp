@@ -1,0 +1,108 @@
+mysql> -- Create and use the database
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE DATABASE bank_db;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> USE bank_db;
+Database changed
+mysql>
+mysql> -- Create the table
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE TABLE bank (
+    ->     S_No INT PRIMARY KEY,
+    ->     Cust_Name VARCHAR(100),
+    ->     Acc_No VARCHAR(20),
+    ->     Balance DECIMAL(10, 2),
+    ->     cas_Branch VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql>
+mysql> -- Insert sample data
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO bank (S_No, Cust_Name, Acc_No, Balance, cas_Branch) VALUES
+    -> (1, 'Alice Smith', 'ACC12345', 1000.00, 'Downtown'),
+    -> (2, 'Bob Johnson', 'ACC23456', 1500.50, 'Uptown'),
+    -> (3, 'Charlie Rose', 'ACC34567', 500.75, 'Midtown'),
+    -> (4, 'Diana Prince', 'ACC45678', 2500.00, 'Downtown'),
+    -> (5, 'Edward Norton', 'ACC56789', 750.00, 'Uptown');
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Simple SELECT with WHERE clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM bank
+    -> WHERE Acc_No = 'ACC23456';
++------+-------------+----------+---------+------------+
+| S_No | Cust_Name   | Acc_No   | Balance | cas_Branch |
++------+-------------+----------+---------+------------+
+|    2 | Bob Johnson | ACC23456 | 1500.50 | Uptown     |
++------+-------------+----------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- SELECT with BETWEEN clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM bank
+    -> WHERE Balance BETWEEN 1000 AND 2000;
++------+-------------+----------+---------+------------+
+| S_No | Cust_Name   | Acc_No   | Balance | cas_Branch |
++------+-------------+----------+---------+------------+
+|    1 | Alice Smith | ACC12345 | 1000.00 | Downtown   |
+|    2 | Bob Johnson | ACC23456 | 1500.50 | Uptown     |
++------+-------------+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> -- SELECT with IN clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM bank
+    -> WHERE Acc_No IN ('ACC12345', 'ACC34567', 'ACC56789');
++------+---------------+----------+---------+------------+
+| S_No | Cust_Name     | Acc_No   | Balance | cas_Branch |
++------+---------------+----------+---------+------------+
+|    1 | Alice Smith   | ACC12345 | 1000.00 | Downtown   |
+|    3 | Charlie Rose  | ACC34567 |  500.75 | Midtown    |
+|    5 | Edward Norton | ACC56789 |  750.00 | Uptown     |
++------+---------------+----------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> -- SELECT with pattern matching (LIKE) clause
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> -- Customer names starting with 'A'
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM bank
+    -> WHERE Cust_Name LIKE 'A%';
++------+-------------+----------+---------+------------+
+| S_No | Cust_Name   | Acc_No   | Balance | cas_Branch |
++------+-------------+----------+---------+------------+
+|    1 | Alice Smith | ACC12345 | 1000.00 | Downtown   |
++------+-------------+----------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- Account numbers ending with '67'
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM bank
+    -> WHERE Acc_No LIKE '%67';
++------+--------------+----------+---------+------------+
+| S_No | Cust_Name    | Acc_No   | Balance | cas_Branch |
++------+--------------+----------+---------+------------+
+|    3 | Charlie Rose | ACC34567 |  500.75 | Midtown    |
++------+--------------+----------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
